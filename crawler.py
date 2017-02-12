@@ -13,7 +13,8 @@ class Linker(threading.Thread):
 
     def __init__(self, link, email):
         self.link = link
-        self.browser = webdriver.Chrome()
+        #self.browser = webdriver.Chrome()
+        self.browser = webdriver.PhantomJS()
         self.email = email
         threading.Thread.__init__(self)
 
@@ -51,7 +52,8 @@ class Linker(threading.Thread):
 class Crawler():
 
     def __init__(self):
-        self.browser = webdriver.Chrome()
+        #self.browser = webdriver.Chrome()
+        self.browser = webdriver.PhantomJS()
         self.link = "https://geo.craigslist.org/iso/us/al"
         self.email = "scraptor.ai@gmail.com"
 

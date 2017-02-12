@@ -5,6 +5,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+import sys
+
+task = sys.argv[1]
 
 class Linker(threading.Thread):
 
@@ -70,9 +73,12 @@ class Crawler():
     
     def threadingRun(self):
         for city in self.getCities():
-            Linker(city, 1).start()
+            Linker(city, self.email).start()
 
     def test(self):
         Linker(self.getCities()[0], self.email).run()
 
-Crawler().test()
+if task == "test":
+    Crawler().test()
+elif task == "crawl":
+    Crawler().threadingRun()

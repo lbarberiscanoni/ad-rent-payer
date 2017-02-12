@@ -13,8 +13,8 @@ class Linker(threading.Thread):
 
     def __init__(self, link, email):
         self.link = link
-        #self.browser = webdriver.Chrome()
-        self.browser = webdriver.PhantomJS()
+        self.browser = webdriver.Chrome()
+        #self.browser = webdriver.PhantomJS()
         self.email = email
         threading.Thread.__init__(self)
 
@@ -52,9 +52,9 @@ class Linker(threading.Thread):
 class Crawler():
 
     def __init__(self):
-        #self.browser = webdriver.Chrome()
-        self.browser = webdriver.PhantomJS()
-        self.link = "https://geo.craigslist.org/iso/us/al"
+        self.browser = webdriver.Chrome()
+        #self.browser = webdriver.PhantomJS()
+        self.link = "https://www.craigslist.org/about/sites#US"
         self.email = "scraptor.ai@gmail.com"
 
     def login(self):
@@ -68,7 +68,8 @@ class Crawler():
         
     def getCities(self):
         self.browser.get(self.link)
-        cityList = self.browser.find_elements_by_css_selector(".height3.geo-site-list li a")
+        areas = self.browser.find_elements_by_css_selector(".colmask") 
+        cityList = areas[0].find_elements_by_css_selector(".box li a")
         cityLinks = [el.get_attribute("href") for el in cityList]
 
         return cityLinks
@@ -79,7 +80,8 @@ class Crawler():
             Linker(city, self.email).start()
 
     def test(self):
-        Linker(self.getCities()[0], self.email).run()
+        #Linker(self.getCities()[0], self.email).run()
+        print self.getCities()
 
 if task == "test":
     Crawler().test()

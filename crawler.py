@@ -75,6 +75,7 @@ class Crawler():
     
     def threadingRun(self):
         for city in self.getCities():
+            print "doing ", city
             Linker(city, self.email).start()
 
     def test(self):

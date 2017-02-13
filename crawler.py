@@ -12,10 +12,11 @@ task = sys.argv[1]
 #class Linker(threading.Thread):
 class Linker():
 
-    def __init__(self, link, email):
+    def __init__(self, browser, link, email):
         self.link = link
-        self.browser = webdriver.Chrome()
+        #self.browser = webdriver.Chrome()
         #self.browser = webdriver.PhantomJS()
+        self.browser = browser
         self.email = email
         #threading.Thread.__init__(self)
 
@@ -79,7 +80,10 @@ class Crawler():
         for city in self.getCities():
             print "doing ", city
             #Linker(city, self.email).start()
-            Linker(city, self.email).run()
+            try:
+                Linker(self.browser, city, self.email).run()
+            except Exception as e:
+                print e
 
     def test(self):
         #Linker(self.getCities()[0], self.email).run()

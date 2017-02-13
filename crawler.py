@@ -9,14 +9,15 @@ import sys
 
 task = sys.argv[1]
 
-class Linker(threading.Thread):
+#class Linker(threading.Thread):
+class Linker():
 
     def __init__(self, link, email):
         self.link = link
         #self.browser = webdriver.Chrome()
         self.browser = webdriver.PhantomJS()
         self.email = email
-        threading.Thread.__init__(self)
+        #threading.Thread.__init__(self)
 
     def extract_links(self):
         def check(string):
@@ -77,7 +78,8 @@ class Crawler():
     def threadingRun(self):
         for city in self.getCities():
             print "doing ", city
-            Linker(city, self.email).start()
+            #Linker(city, self.email).start()
+            Linker(city, self.email).run()
 
     def test(self):
         #Linker(self.getCities()[0], self.email).run()

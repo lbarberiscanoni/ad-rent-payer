@@ -22,7 +22,7 @@ class Linker():
 
     def extract_links(self):
         def check(string):
-            interests = [" ad", "data", "lister", "poster", "listing", "advertising", "entry"]
+            interests = [" ad", "data", "lister", "poster", "posting", "listing", " post ", "advertising", "entry"]
             if any(x in string for x in interests):
                 return True
             else:

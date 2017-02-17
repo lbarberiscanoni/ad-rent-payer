@@ -35,7 +35,11 @@ class Poster():
         submitBtn.submit()
 
     def job_flow(self):
-        self.browser.get("https://post.craigslist.org/k/NGrYPL_05hGDQzWBu9LzZA/ZpupS?s=type")
+        #self.browser.get("https://post.craigslist.org/k/NGrYPL_05hGDQzWBu9LzZA/ZpupS?s=type")
+        self.browser.get("https://sfbay.craigslist.org")
+        postToClassifiedBtn = self.browser.find_element_by_id("post")
+        postToClassifiedBtn.click()
+        time.sleep(1)
         time.sleep(2)
         gigRdio = self.browser.find_element_by_css_selector(".selection-list li:nth-of-type(2) label span:nth-of-type(1) input")
         gigRdio.click()
@@ -72,32 +76,63 @@ class Poster():
         zipCode = self.zipCode(cityName)
         self.browser.back()
         emailInpt = self.browser.find_element_by_id("FromEMail")
+        emailInpt.clear()
         emailInpt.send_keys(self.email)
         emailInpt = self.browser.find_element_by_id("ConfirmEMail")
+        emailInpt.clear()
         emailInpt.send_keys(self.email)
         contactTextOkInpt = self.browser.find_element_by_id("contact_text_ok")
         contactTextOkInpt.click()
         phoneInpt = self.browser.find_element_by_id("contact_phone")
+        phoneInpt.clear()
         phoneInpt.send_keys(self.phone_num)
         contactInpt = self.browser.find_element_by_id("contact_name")
+        contactInpt.clear()
         contactInpt.send_keys(self.name)
         titleInpt = self.browser.find_element_by_id("PostingTitle")
+        titleInpt.clear()
         titleInpt.send_keys(self.title)
         zipInpt = self.browser.find_element_by_id("postal_code")
+        zipInpt.clear()
         zipInpt.send_keys(zipCode)
         bodyInpt = self.browser.find_element_by_id("PostingBody")
+        bodyInpt.clear()
         bodyInpt.send_keys(self.body)
         payRdio = self.browser.find_element_by_id("pay_label")
         payRdio.click()
         payInpt = self.browser.find_element_by_id("remuneration")
+        payInpt.clear()
         payInpt.send_keys(self.payment)
-        self.submit()
+        payInpt.submit()
+        time.sleep(1)
+        pinBtn = self.browser.find_element_by_id("search_button")
+        pinBtn.click()
+        continueBtn = self.browser.find_element_by_css_selector(".continue.bigbutton")
+        continueBtn.click()
+        time.sleep(1)
+        try:
+            alert = self.browser.switch_to_alert()
+            alert.accept()
+        except:
+            print "no alert"
+        try:
+            doneWithImagesBtn = self.browser.find_element_by_css_selector(".done.bigbutton")
+            doneWithImagesBtn.click()
+            time.sleep(1)
+        except:
+            print "no images requested"
+        publishBtn = self.browser.find_element_by_css_selector("#publish_top .button")
+        publishBtn.submit()
 
     def run(self):
-        #self.login()
         self.job_flow()
         self.post()
-        time.sleep(15)
+        time.sleep(5)
 
-Poster().run()
+
+try:
+    Poster().run()
+except:
+    Poster().run()
+
 

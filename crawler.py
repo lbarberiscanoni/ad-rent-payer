@@ -20,7 +20,7 @@ class Linker():
 
     def extract_links(self):
         def check(string):
-            interests = [" ad", "data", "lister", "poster", "posting", "listing", " post ", "advertising", "entry"]
+            interests = [" ad", "survey", "data", "lister", "poster", "posting", "listing", " post ", "advertising", "entry"]
             if any(x in string.lower() for x in interests):
                 if string.lower().strip() in titles:
                     return False

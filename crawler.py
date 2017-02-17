@@ -6,9 +6,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import sys
+import subprocess
 
 task = sys.argv[1]
 
+titles = []
 #class Linker(threading.Thread):
 class Linker():
 
@@ -23,33 +25,30 @@ class Linker():
     def extract_links(self):
         def check(string):
             interests = [" ad", "data", "lister", "poster", "posting", "listing", " post ", "advertising", "entry"]
-            if any(x in string for x in interests):
-                return True
+            if any(x in string.lower() for x in interests):
+                if string.lower().strip() in titles:
+                    return False
+                else:
+                    titles.append(string.lower().strip())
+                    return True
             else:
                 return False
         results = self.browser.find_elements_by_class_name("result-title")
-        links = [str(x.get_attribute("href")) for x in results if check(x.text) == True]
+        obs = [{"title": x.text, "link": x.get_attribute("href")} for x in results if check(x.text) == True]
 
-        return links
+        return obs
 
-    def send_via_email(self, link):    
-        self.browser.get(link)
-        emailBtn = self.browser.find_element_by_class_name("email-friend")
-        emailBtn.click()
-        time.sleep(1.5)
-        WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.ID, "S")))
-        senderEmailInpt = self.browser.find_element_by_id("S")
-        senderEmailInpt.send_keys(self.email)
-        receiverEmailInpt = self.browser.find_element_by_id("D")
-        receiverEmailInpt.send_keys(self.email)
-        receiverEmailInpt.submit()
-        time.sleep(.5)
+
+    def send_via_email(self, title, link):    
+        #self.browser.get(link)
+        orderUpdate = "python gmailText.py -u " + self.email + " -p pay4rent -t " + self.email + " -s '" + str(title).replace("\"", "").replace("'", "") + "' -b '" + str(link) + "'"
+        subprocess.call(orderUpdate, shell=True)
 
     def run(self):
         self.browser.get(str(self.link) + "search/sss?query=ad+posting&sort=rel")
-        listOfLinks = self.extract_links()
-        for link in listOfLinks:
-            self.send_via_email(link)
+        applicableAds = self.extract_links()
+        for el in applicableAds:
+            self.send_via_email(el["title"], el["link"])
 
 class Crawler():
 

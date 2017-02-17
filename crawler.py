@@ -11,16 +11,12 @@ import subprocess
 task = sys.argv[1]
 
 titles = []
-#class Linker(threading.Thread):
 class Linker():
 
     def __init__(self, browser, link, email):
         self.link = link
-        #self.browser = webdriver.Chrome()
-        #self.browser = webdriver.PhantomJS()
         self.browser = browser
         self.email = email
-        #threading.Thread.__init__(self)
 
     def extract_links(self):
         def check(string):
@@ -40,7 +36,6 @@ class Linker():
 
 
     def send_via_email(self, title, link):    
-        #self.browser.get(link)
         orderUpdate = "python gmailText.py -u " + self.email + " -p pay4rent -t " + self.email + " -s '" + str(title).replace("\"", "").replace("'", "") + "' -b '" + str(link) + "'"
         subprocess.call(orderUpdate, shell=True)
 
@@ -53,8 +48,10 @@ class Linker():
 class Crawler():
 
     def __init__(self):
-        self.browser = webdriver.Chrome()
-        #self.browser = webdriver.PhantomJS()
+        if sys.platform == "darwin":
+            self.browser = webdriver.Chrome()
+        else:
+            self.browser = webdriver.PhantomJS()
         self.link = "https://www.craigslist.org/about/sites#US"
         self.email = "scraptor.ai@gmail.com"
 

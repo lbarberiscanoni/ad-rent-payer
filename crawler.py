@@ -73,13 +73,15 @@ class Crawler():
         return cityLinks
     
     def threadingRun(self):
+        i = 0
         for city in self.getCities():
-            print "doing ", city
+            print "doing #", i, city
             #Linker(city, self.email).start()
             try:
                 Linker(self.browser, city, self.email).run()
             except Exception as e:
                 print e
+            i += 1
 
     def test(self):
         #Linker(self.getCities()[0], self.email).run()

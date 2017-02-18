@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 import sys
 import subprocess
 from random import randint
+from gmailModule import Gmail
 
 #task = sys.argv[1]
 
@@ -102,8 +103,16 @@ class Poster():
         try:
             alert = self.browser.switch_to_alert()
             alert.accept()
+            newZipCode = self.browser.find_element_by_id("postal_code")
+            newZipCode.clear()
+            newZipCode.send_keys("77110")
+            searchZip = self.browser.find_element_by_id("search_button")
+            searchZip.click()
+            time.sleep(1)
+            continueBtn.click()
         except:
             print "no alert"
+        time.sleep(2)
         try:
             doneWithImagesBtn = self.browser.find_element_by_css_selector(".done.bigbutton")
             doneWithImagesBtn.click()
@@ -113,13 +122,43 @@ class Poster():
         publishBtn = self.browser.find_element_by_css_selector("#publish_top .button")
         publishBtn.submit()
 
+    def checkEmailForLink(self):
+        g = Gmail()
+        g.login("scraptor.ai@gmail.com", "pay4rent")
+        unreadEmails = g.inbox().mail(unread = True)
+        link = False
+        for email in unreadEmails:
+            email.fetch()
+            email.read()
+            if "POST/EDIT/DELETE:" in str(email.subject):
+                link = [x for x in str(email.body).split("\n") if "https" in x][0]
+
+        return link
+
+    def publish(self):
+        link = self.checkEmailForLink()
+        self.browser.get(link)
+        acceptBtn = self.browser.find_element_by_css_selector(".previewButtons form button")
+        acceptBtn.click()
+        postLink = self.browser.find_element_by_css_selector(".body .ul li a").get_attribute("href")
+        return postLink
+
     def run(self):
         self.job_flow()
         self.post()
         time.sleep(5)
+        link = self.publish()
+        print link
 
+def main():
+    for i in range(0, 10):
+        status = 0
+        while status == 0:
+            try:
+                Poster().run()
+                status = 1
+            except:
+                print "trying again"
+        time.sleep(25 * 60)
 
-try:
-    Poster().run()
-except:
-    Poster().run()
+main()

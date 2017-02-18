@@ -151,7 +151,7 @@ class Poster():
         print link
 
 def main():
-    for i in range(0, 10):
+    for i in range(0, 8):
         status = 0
         while status == 0:
             try:

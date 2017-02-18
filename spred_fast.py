@@ -14,7 +14,7 @@ from gmailModule import Gmail
 class Poster():
 
     def __init__(self):
-        self.email = "scraptor.ai@gmail.com"
+        self.email = "dreamage.ai@gmail.com"
         self.password = "pay4rent"
         self.browser = webdriver.Chrome()
         self.phone_num = "5712103649"
@@ -124,7 +124,7 @@ class Poster():
 
     def checkEmailForLink(self):
         g = Gmail()
-        g.login("scraptor.ai@gmail.com", "pay4rent")
+        g.login("dreamage.ai@gmail.com", "l0ll02013")
         unreadEmails = g.inbox().mail(unread = True)
         link = False
         for email in unreadEmails:

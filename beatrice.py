@@ -200,6 +200,6 @@ def main():
                 status = 1
             except:
                 print "trying again"
-        time.sleep(300) 
+        time.sleep((15 + randint(3, 7)) * 60)
 
 main()

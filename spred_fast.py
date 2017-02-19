@@ -22,6 +22,8 @@ class Poster():
         self.title = "NEED A CRAIGSLIST POSTER"
         self.body = "Make $450 cash weekly by posting on craigslist\n\nContact Mr David (571) 210-3649 for more info, text only."
         self.payment = "$450 weekly"
+        self.state = ""
+        self.zipCodes = {"ak": "99824", "al": "36103", "ar": "72002", "az": "85001", "ca": "94110", "co": "80241", "ct": "061", "de": "19901", "fl": "32300", "ga": "30060", "hi": "96801", "ia": "50340", "id": "83701", "il": "62701", "in": "46211", "ks": "66622", "ky": "40601", "la": "70801", "ma": "02203", "md": "21409", "me": "02100", "mi": "48980", "mn": "55175", "mo": "65111", "ms": "39299", "mt": "59604", "nc": "27601", "nd": "58507", "ne": "68512", "nh": "14200", "nj": "08625", "nm": "87599", "nv": "89721", "ny": "12220", "oh": "43251", "ok": "73167", "or": "97305", "pa": "17177", "ri": "02918", "sc": "29223", "sd": "57501", "tn": "37250", "tx": "78708", "ut": "84141", "va": "23255", "vt": "05609", "wa": "98599", "wi": "53702", "wv": "25317", "wy": "82002"}
 
     def login(self):
         self.browser.get("https://accounts.craigslist.org/login")
@@ -36,7 +38,7 @@ class Poster():
         submitBtn.submit()
 
     def job_flow(self):
-        self.browser.get("https://houston.craigslist.org")
+        #self.browser.get("https://houston.craigslist.org")
         postToClassifiedBtn = self.browser.find_element_by_id("post")
         postToClassifiedBtn.click()
         time.sleep(1)
@@ -53,16 +55,25 @@ class Poster():
 
     def zipCode(self, city):
         try:
-            self.browser.get("https://www.zip-codes.com/search.asp?fld-address=&fld-city2=" + city + "&fld-state2=TX")
+            self.browser.get("https://www.zip-codes.com/search.asp?fld-address=&fld-city2=" + city + "&fld-state2=" + self.state)
             zipCode = self.browser.find_element_by_css_selector("tr td.a a")
             zipCode = str(zipCode.text)
         except:
-            zipCode = "77010"
+            zipCode = self.zipCodes[self.state]
         
         return zipCode
 
+    def getCityName(self):
+        try:
+            cityName = self.browser.find_element_by_tag_name("b")
+            cityName = str(cityName.text).replace(" ", "+").replace("(", "").replace(")", "")
+        except:
+            cityName = str(self.browser.current_url).split(".craigslist")[0].replace("https://")
+
+        return cityName
+
     def post(self):
-        cityName = "Houston"
+        cityName = self.getCityName()
         zipCode = self.zipCode(cityName)
         self.browser.back()
         emailInpt = self.browser.find_element_by_id("FromEMail")
@@ -105,7 +116,7 @@ class Poster():
             alert.accept()
             newZipCode = self.browser.find_element_by_id("postal_code")
             newZipCode.clear()
-            newZipCode.send_keys("77110")
+            newZipCode.send_keys(self.zipCodes[self.state])
             searchZip = self.browser.find_element_by_id("search_button")
             searchZip.click()
             time.sleep(1)
@@ -143,7 +154,27 @@ class Poster():
         postLink = self.browser.find_element_by_css_selector(".body .ul li a").get_attribute("href")
         return postLink
 
+    def getCities(self):
+        self.browser.get("https://www.craigslist.org/about/sites#US")
+        areas = self.browser.find_elements_by_css_selector(".colmask") 
+        cityList = areas[0].find_elements_by_css_selector(".box li a")
+        cityLinks = [el.get_attribute("href") for el in cityList]
+
+        return cityLinks
+
+    def getState(self, link):
+        self.browser.get(str(link))
+        state = self.browser.find_element_by_css_selector("#topban .regular-area .area").text.split(",")[1].strip()
+
+        return state
+
+
     def run(self):
+        cityLinks = self.getCities()
+        url = cityLinks[randint(0, len(cityLinks) - 1)]
+        self.browser.get(url)
+        location = self.getState(url)
+        self.state = location
         self.job_flow()
         self.post()
         time.sleep(5)

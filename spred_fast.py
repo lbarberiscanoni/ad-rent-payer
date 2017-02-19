@@ -38,7 +38,8 @@ class Poster():
         submitBtn.submit()
 
     def job_flow(self):
-        #self.browser.get("https://houston.craigslist.org")
+        #self.browser.get("https://post.craigslist.org/k/NGrYPL_05hGDQzWBu9LzZA/ZpupS?s=type")
+        #self.browser.get("https://sfbay.craigslist.org")
         postToClassifiedBtn = self.browser.find_element_by_id("post")
         postToClassifiedBtn.click()
         time.sleep(1)
@@ -49,8 +50,24 @@ class Poster():
         time.sleep(1)
         self.submit()
         time.sleep(1)
-        laborGig = self.browser.find_element_by_css_selector(".selection-list li:nth-of-type(4) label span:nth-of-type(1) input")
+        laborGig = self.browser.find_element_by_css_selector(".selection-list li:nth-of-type(6) label span:nth-of-type(1) input")
         laborGig.click()
+        #self.submit()
+        time.sleep(1)
+        try:
+            numOfRegions = int(len(self.browser.find_elements_by_css_selector(".selection-list li")))
+            regionInpt = self.browser.find_element_by_css_selector(".selection-list li:nth-of-type(" + str(randint(1, numOfRegions - 1)) + ") label input")
+            regionInpt.click()
+            #self.submit()
+        except:
+            print "no need to speciy the region"
+        time.sleep(1)
+        try:
+            numOfCities = int(len(self.browser.find_elements_by_css_selector(".selection-list li")))
+            cityInpt = self.browser.find_element_by_css_selector(".selection-list li:nth-of-type(" + str(randint(1, numOfCities - 1)) + ") label span:nth-of-type(1) input")
+            cityInpt.click()
+        except:
+            print "no city to select"
         time.sleep(1)
 
     def zipCode(self, city):
@@ -68,7 +85,7 @@ class Poster():
             cityName = self.browser.find_element_by_tag_name("b")
             cityName = str(cityName.text).replace(" ", "+").replace("(", "").replace(")", "")
         except:
-            cityName = str(self.browser.current_url).split(".craigslist")[0].replace("https://")
+            cityName = str(self.browser.current_url).split(".craigslist")[0].split("//")[1]
 
         return cityName
 
@@ -135,7 +152,7 @@ class Poster():
 
     def checkEmailForLink(self):
         g = Gmail()
-        g.login("dreamage.ai@gmail.com", "l0ll02013")
+        g.login("scraptor.ai@gmail.com", "pay4rent")
         unreadEmails = g.inbox().mail(unread = True)
         link = False
         for email in unreadEmails:
@@ -168,29 +185,32 @@ class Poster():
 
         return state
 
-
     def run(self):
-        cityLinks = self.getCities()
-        url = cityLinks[randint(0, len(cityLinks) - 1)]
-        self.browser.get(url)
-        location = self.getState(url)
-        self.state = location
-        self.job_flow()
-        self.post()
-        time.sleep(5)
-        link = self.publish()
-        print link
+        try:
+            cityLinks = self.getCities()
+            url = cityLinks[randint(0, len(cityLinks) - 1)]
+            self.browser.get(url)
+            location = self.getState(url)
+            self.state = location.lower()
+            self.job_flow()
+            self.post()
+            time.sleep(5)
+            link = self.publish()
+            print link
+        except:
+            self.browser.close()
+
 
 def main():
-    for i in range(0, 8):
+    for i in range(0, 10):
         status = 0
         while status == 0:
             try:
                 Poster().run()
                 status = 1
-            except:
+            except Exception as e:
+                print e
                 print "trying again"
-        time.sleep((25 + randint(3, 7)) * 60)
-
+        time.sleep((15 + randint(3, 7)) * 60)
 
 main()

@@ -82,8 +82,9 @@ class Crawler():
     
     def threadingRun(self):
         i = 0
-        for city in self.getCities():
-            print "doing #", i, city
+        cityList = self.getCities()
+        for city in cityList:
+            print "doing #", str(i) + "/" + str(len(cityList)), city
             #Linker(city, self.email).start()
             try:
                 Linker(self.browser, city, self.email).run()

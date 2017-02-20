@@ -189,6 +189,7 @@ class Poster():
     def confimationEmail(self, link):
         orderUpdate = "python gmailText.py -u " + self.email + " -p " + self.password + " -t " + self.client + " -s 'Latest Ad from Me'" + " -b '" + str(link) + "'"
         subprocess.call(orderUpdate, shell=True)
+        print "successfully sent the email"
 
     def run(self):
         cityLinks = self.getCities()

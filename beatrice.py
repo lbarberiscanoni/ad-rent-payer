@@ -19,9 +19,9 @@ class Poster():
         self.password = "pay4rent"
         self.browser = webdriver.Chrome()
         self.phone_num = "3343772470"
-        self.name = "Jesse"
-        self.title = "Make $500 Weekly"
-        self.body = "HELLO, Would you allow Bud Wiser to put a small sticker on your CAR, TRUCK, OR MOTORCYCLE, For Bud Company Promo Advertising and received $500 every week?! The program will last for 3 months...\n\n if you are interested please text (334) 377-2470  for more details \n\n Ask for Jesse"
+        self.name = "Beatrice Gary"
+        self.title = "Earn Extra Money by Advertising ror Full Throttle Energy Drink"
+        self.body = "Earn Extra payment for putting Full Throttle Energy Drink sticker/Logo on side of your car, Vehicle, Truck & Boat..\n\nRespond with your name, Make of ride/Year and Contact Email Address.\n\nFor more information txt Beatrice Gary (334) 377-2470"
         self.payment = "$500 weekly"
         self.state = ""
         self.zipCodes = {"ak": "99824", "al": "36103", "ar": "72002", "az": "85001", "ca": "94110", "co": "80241", "ct": "061", "de": "19901", "fl": "32300", "ga": "30060", "hi": "96801", "ia": "50340", "id": "83701", "il": "62701", "in": "46211", "ks": "66622", "ky": "40601", "la": "70801", "ma": "02203", "md": "21409", "me": "02100", "mi": "48980", "mn": "55175", "mo": "65111", "ms": "39299", "mt": "59604", "nc": "27601", "nd": "58507", "ne": "68512", "nh": "14200", "nj": "08625", "nm": "87599", "nv": "89721", "ny": "12220", "oh": "43251", "ok": "73167", "or": "97305", "pa": "17177", "ri": "02918", "sc": "29223", "sd": "57501", "tn": "37250", "tx": "78708", "ut": "84141", "va": "23255", "vt": "05609", "wa": "98599", "wi": "53702", "wv": "25317", "wy": "82002"}

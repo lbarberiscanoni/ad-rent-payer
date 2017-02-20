@@ -20,7 +20,8 @@ class Poster():
         self.browser = webdriver.Chrome()
         self.phone_num = "5712103649"
         self.name = "David"
-        self.title = "NEED A CRAIGSLIST POSTER"
+        title_options = ["apply if you are always online...", "NEED A CRAIGSLIST POSTER", "earn money with your data by posting", "EARN $450 WEEKLY BY POSTING ON CRAIGSLIST"]
+        self.title = title_options[randint(0, len(title_options) - 1)]
         self.body = "Make $450 cash weekly by posting on craigslist\n\nContact Mr David (571) 210-3649 for more info, text only."
         self.payment = "$450 weekly"
         self.state = ""

@@ -52,7 +52,7 @@ class Linker():
 
     def run(self):
         stateCode = self.getState()
-        self.browser.get(str(self.link) + "search/ggg?query=ad+poster&sort=rel")
+        self.browser.get(str(self.link) + "search/ggg?query=" + content + "&sort=rel")
         applicableAds = self.extract_links()
         for el in applicableAds:
             self.send_via_email(el["title"], el["link"])

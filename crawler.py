@@ -44,14 +44,7 @@ class Linker():
         orderUpdate = "python gmailText.py -u " + self.email + " -p pay4rent -t " + self.email + " -s '" + str(title).replace("\"", "").replace("'", "") + "' -b '" + str(link) + "'"
         subprocess.call(orderUpdate, shell=True)
 
-    def getState(self):
-        self.browser.get(str(self.link))
-        state = self.browser.find_element_by_css_selector("#topban .regular-area .area").text.split(",")[1].strip()
-
-        return state
-
     def run(self):
-        stateCode = self.getState()
         self.browser.get(str(self.link) + "search/ggg?query=" + content + "&sort=rel")
         applicableAds = self.extract_links()
         for el in applicableAds:

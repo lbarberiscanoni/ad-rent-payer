@@ -15,6 +15,7 @@ class Poster():
 
     def __init__(self):
         self.email = "dreamage.ai@gmail.com"
+        self.client = "spredfast2@gmail.com"
         self.password = "pay4rent"
         self.browser = webdriver.Chrome()
         self.phone_num = "5712103649"
@@ -152,7 +153,7 @@ class Poster():
 
     def checkEmailForLink(self):
         g = Gmail()
-        g.login(self.email, "l0ll02013")
+        g.login(self.email, self.password)
         unreadEmails = g.inbox().mail(unread = True)
         link = False
         for email in unreadEmails:
@@ -184,6 +185,10 @@ class Poster():
         state = self.browser.find_element_by_css_selector("#topban .regular-area .area").text.split(",")[1].strip()
 
         return state
+
+    def confimationEmail(self, link):
+        orderUpdate = "python gmailText.py -u " + self.email + " -p " + self.password + " -t " + self.client + " -s 'Latest Ad from Me'" + " -b '" + str(link) + "'"
+        subprocess.call(orderUpdate, shell=True)
 
     def run(self):
         cityLinks = self.getCities()

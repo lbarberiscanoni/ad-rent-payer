@@ -186,20 +186,16 @@ class Poster():
         return state
 
     def run(self):
-        try:
-            cityLinks = self.getCities()
-            url = cityLinks[randint(0, len(cityLinks) - 1)]
-            self.browser.get(url)
-            location = self.getState(url)
-            self.state = location.lower()
-            self.job_flow()
-            self.post()
-            time.sleep(5)
-            link = self.publish()
-            print link
-        except:
-            self.browser.close()
-
+        cityLinks = self.getCities()
+        url = cityLinks[randint(0, len(cityLinks) - 1)]
+        self.browser.get(url)
+        location = self.getState(url)
+        self.state = location.lower()
+        self.job_flow()
+        self.post()
+        time.sleep(5)
+        link = self.publish()
+        print link
 
 def main():
     for i in range(0, 10):

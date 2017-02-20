@@ -9,6 +9,7 @@ import sys
 import subprocess
 
 task = sys.argv[1]
+content = sys.argv[2]
 
 titles = []
 class Linker():
@@ -17,11 +18,15 @@ class Linker():
         self.link = link
         self.browser = browser
         self.email = email
+        content_options = {
+                "ads": [" ad", "survey", "data", "lister", "poster", "posting", "listing", " post ", "advertising", "entry", "ebay"],
+                "code": ["programming", "developer", "app", "website", "coder", "code", "software", "twitter", "software", "web design", "e-commerce"]
+        }
+        self.interests = content_options[content]
 
     def extract_links(self):
         def check(string):
-            interests = [" ad", "survey", "data", "lister", "poster", "posting", "listing", " post ", "advertising", "entry"]
-            if any(x in string.lower() for x in interests):
+            if any(x in string.lower() for x in self.interests):
                 if string.lower().strip() in titles:
                     return False
                 else:
@@ -60,14 +65,17 @@ class Crawler():
         else:
             self.browser = webdriver.PhantomJS()
         self.link = "https://www.craigslist.org/about/sites#US"
-        self.email = "scraptor.ai@gmail.com"
+        if content == "ads":
+            self.email = "scraptor.ai@gmail.com"
+        elif content == "code":
+            self.email = "dreamage.ai@gmail.com"
 
     def login(self):
         self.browser.get("https://accounts.craigslist.org/login")
         emaiInpt = self.browser.find_element_by_id("inputEmailHandle")
-        emaiInpt.send_keys("scraptor.ai@gmail.com")
+        emaiInpt.send_keys(self.email)
         passInpt = self.browser.find_element_by_id("inputPassword")
-        passInpt.send_keys("scraptor.ai@gmail.com")
+        passInpt.send_keys(self.email)
         passInpt.submit()
         time.sleep(2)
         

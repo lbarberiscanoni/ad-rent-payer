@@ -201,6 +201,7 @@ class Poster():
         time.sleep(5)
         link = self.publish()
         print link
+        self.confimationEmail(str(link))
 
 def main():
     for i in range(0, 10):

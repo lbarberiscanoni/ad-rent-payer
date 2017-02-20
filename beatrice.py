@@ -152,7 +152,7 @@ class Poster():
 
     def checkEmailForLink(self):
         g = Gmail()
-        g.login("scraptor.ai@gmail.com", "pay4rent")
+        g.login(self.email, "pay4rent")
         unreadEmails = g.inbox().mail(unread = True)
         link = False
         for email in unreadEmails:

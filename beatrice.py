@@ -17,7 +17,10 @@ class Poster():
         self.email = "scraptor.ai@gmail.com"
         self.client = "beatricecng@gmail.com"
         self.password = "pay4rent"
-        self.browser = webdriver.Chrome()
+        if sys.platform == "darwin":
+            self.browser = webdriver.Chrome()
+        else:
+            self.browser = webdriver.PhantomJS()
         self.phone_num = "3343772470"
         self.name = "Beatrice Gary"
         self.title = "Earn Extra Money by Advertising ror Full Throttle Energy Drink"

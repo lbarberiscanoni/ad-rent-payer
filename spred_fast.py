@@ -17,7 +17,10 @@ class Poster():
         self.email = "dreamage.ai@gmail.com"
         self.client = "spredfast2@gmail.com"
         self.password = "pay4rent"
-        self.browser = webdriver.Chrome()
+        if sys.platform == "darwin":
+            self.browser = webdriver.Chrome()
+        else:
+            self.browser = webdriver.PhantomJS()
         self.phone_num = "5712103649"
         self.name = "David"
         title_options = ["apply if you are always online...", "NEED A CRAIGSLIST POSTER", "earn money with your data by posting", "EARN $450 WEEKLY BY POSTING ON CRAIGSLIST"]

@@ -213,9 +213,9 @@ class Poster():
         self.job_flow()
         self.post()
         time.sleep(5)
-        #link = self.publish()
-        #print link
-        #self.confimationEmail(str(link))
+        link = self.publish()
+        print link
+        self.confimationEmail(str(link))
 
 class Selector():
 

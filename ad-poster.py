@@ -199,9 +199,16 @@ class Poster():
 
     def run(self):
         cityLinks = self.getCities()
-        url = cityLinks[randint(0, len(cityLinks) - 1)]
-        self.browser.get(url)
-        location = self.getState(url)
+        attemptStatus = 0
+        location = ""
+        while attemptStatus < 1:
+            try:
+                url = cityLinks[randint(0, len(cityLinks) - 1)]
+                self.browser.get(url)
+                location = self.getState(url)
+                attemptStatus += 1
+            except:
+                print "location not available"
         self.state = location.lower()
         self.job_flow()
         self.post()

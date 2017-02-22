@@ -234,6 +234,6 @@ class Selector():
                 except Exception as e:
                     print e
                     print "trying again"
-            time.sleep((15 + randint(3, 7)) * 60)
+            time.sleep((35 + randint(5, 15)) * 60)
 
 Selector(client).run()

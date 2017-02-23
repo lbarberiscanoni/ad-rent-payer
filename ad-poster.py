@@ -233,6 +233,7 @@ class Selector():
     def run(self):
         self.loadSpecs()
         for i in range(0, 10):
+            print "doing #", i
             status = 0
             while status == 0:
                 try:

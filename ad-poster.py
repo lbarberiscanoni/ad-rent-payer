@@ -150,7 +150,7 @@ class Poster():
         except:
             print "no images requested"
         publishBtn = self.browser.find_element_by_css_selector("#publish_top .button")
-        #publishBtn.submit()
+        publishBtn.submit()
 
     def checkEmailForLink(self):
         g = Gmail()
@@ -198,7 +198,7 @@ class Poster():
         location = ""
         while attemptStatus < 1:
             try:
-                url = cityLinks[randint(0, len(cityLinks) - 1)]
+                url = str(cityLinks[randint(0, len(cityLinks) - 1)])
                 self.browser.get(url)
                 location = self.getState(url)
                 attemptStatus += 1

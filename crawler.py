@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import sys
 import subprocess
+from datetime import datetime
 
 task = sys.argv[1]
 content = sys.argv[2]
@@ -23,6 +24,7 @@ class Linker():
                 "code": ["programming", "developer", "app", "website", "coder", "code", "software", "twitter", "software", "web design", "e-commerce"]
         }
         self.interests = content_options[content]
+        self.today = str(datetime.now().strftime("%Y-%m-%d"))
 
     def extract_links(self):
         def check(string):
@@ -35,6 +37,7 @@ class Linker():
             else:
                 return False
         results = self.browser.find_elements_by_class_name("result-title")
+        results = [x for x in results if str(x.get_attribute("datetime")).split(" ")[0] == self.today]
         obs = [{"title": x.text, "link": x.get_attribute("href")} for x in results if check(x.text) == True]
 
         return obs

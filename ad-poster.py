@@ -15,14 +15,11 @@ client = sys.argv[1]
 
 class Poster():
 
-    def __init__(self, ob):
+    def __init__(self, ob, browser):
         self.email = ob["email"]
         self.client = ob["client"]
         self.password = ob["password"]
-        if sys.platform == "darwin":
-            self.browser = webdriver.Chrome()
-        else:
-            self.browser = webdriver.PhantomJS()
+        self.browser = browser
         self.phone_num = ob["phone_num"]
         self.name = ob["name"]
         title_options = ob["title_options"]
@@ -45,8 +42,6 @@ class Poster():
         submitBtn.submit()
 
     def job_flow(self):
-        #self.browser.get("https://post.craigslist.org/k/NGrYPL_05hGDQzWBu9LzZA/ZpupS?s=type")
-        #self.browser.get("https://sfbay.craigslist.org")
         postToClassifiedBtn = self.browser.find_element_by_id("post")
         postToClassifiedBtn.click()
         time.sleep(1)
@@ -236,11 +231,17 @@ class Selector():
             print "doing #", i
             status = 0
             while status == 0:
+                if sys.platform == "darwin":
+                    browser = webdriver.Chrome()
+                else:
+                    browser = webdriver.PhantomJS()
                 try:
-                    Poster(self.specs).run()
+                    Poster(self.specs, browser).run()
                     status = 1
+                    browser.close()
                 except Exception as e:
                     print e
+                    browser.close()
                     print "trying again"
             time.sleep((35 + randint(5, 15)) * 60)
 

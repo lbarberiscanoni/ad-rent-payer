@@ -53,6 +53,12 @@ class Linker():
         for el in applicableAds:
             self.send_via_email(el["title"], el["link"])
 
+        self.browser.get(str(self.link) + "search/cpg?query=" + content + "&sort=rel")
+        applicableAds = self.extract_links()
+        for el in applicableAds:
+            self.send_via_email(el["title"], el["link"])
+
+
 class Crawler():
 
     def __init__(self):

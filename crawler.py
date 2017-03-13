@@ -102,4 +102,5 @@ class Crawler():
 if task == "test":
     Crawler().test()
 elif task == "crawl":
-    Crawler().threadingRun()
+    while True:
+        Crawler().threadingRun()

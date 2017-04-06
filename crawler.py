@@ -21,7 +21,7 @@ class Linker():
         self.email = email
         content_options = {
                 "ads": [" ad", "survey", "data", "lister", "poster", "posting", "listing", " post ", "advertising", "entry", "ebay"],
-                "code": ["programming", "developer", "app", "website", "coder", "code", "software", "twitter", "software", "web design", "e-commerce"]
+                "code": ["programming", "developer", "app", "website", "coder", "code", "software", "twitter", "software", "web design", "e-commerce", "tech", "dev", "programmer", "python", "javascript", "js", "JS", "html", "html5", "script", "coding"]
         }
         self.interests = content_options[content]
         self.today = str(datetime.now().strftime("%Y-%m-%d"))
